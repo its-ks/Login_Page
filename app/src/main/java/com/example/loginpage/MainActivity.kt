@@ -82,7 +82,7 @@ fun Login(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Welcome",
+            text = "Welcome sir",
             color = Color.Blue,
             fontSize = 28.sp,
             fontFamily = FontFamily.Monospace,
