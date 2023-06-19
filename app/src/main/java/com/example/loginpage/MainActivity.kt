@@ -1,7 +1,14 @@
 package com.example.loginpage
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -34,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import com.example.loginpage.ui.theme.LoginPageTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +53,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth()){
-                    Login()
+                    Login(this@MainActivity)
                 }
             }
         }
@@ -53,7 +61,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Login(){
+fun Login(context: Context? = null){
     val focusManager= LocalFocusManager.current
 
     var username= remember {
@@ -82,10 +90,11 @@ fun Login(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Welcome sir",
+            text = "Welcome",
             color = Color.Blue,
-            fontSize = 28.sp,
-            fontFamily = FontFamily.Monospace,
+            fontSize = 40.sp,
+            fontStyle = FontStyle.Italic,
+            fontFamily = FontFamily.Cursive,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -103,7 +112,7 @@ fun Login(){
             modifier = Modifier
                 .height(150.dp)
                 .width(150.dp)
-                .size(200.dp)
+                .size(250.dp)
                 .clip(CircleShape)
                 .fillMaxWidth()
                 .padding(15.dp),
@@ -209,7 +218,7 @@ fun Login(){
 
                 )
                 Button(
-                    onClick = { /* Handle button click */ },
+                    onClick = { Toast.makeText(context,"Logged In!", Toast.LENGTH_SHORT).show() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
@@ -249,19 +258,28 @@ fun Login(){
                 )
             }
         }
+        Divider(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
+        )
 
         Button(
-            onClick={},
+            onClick={
+                    val navigate = Intent(context , Register_Page::class.java)
+                    context?.startActivity(navigate)
+            },
             enabled = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(25.dp),
+                .padding(35.dp),
             colors = ButtonDefaults.buttonColors (backgroundColor = Color.White),
             shape = RoundedCornerShape(25.dp)
         ){
             Text(
                 text = "Register",
-                modifier=Modifier.padding(bottom = 10.dp),
+                modifier=Modifier.padding(10.dp),
                 //fontWeight = FontWeight. Bold,
                 color = Color.Black,
                 fontSize = 16.sp)}
@@ -270,6 +288,8 @@ fun Login(){
 
 
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
@@ -280,7 +300,7 @@ fun DefaultPreview() {
                 .fillMaxHeight()
                 .fillMaxWidth()
         ) {
-            Login()
+            Login(null)
         }
     }
 }
